@@ -21,7 +21,7 @@ To transfer data through shared memory, a structure called blot_t is created and
 * sh_read_cv: conditional variable for reading
 * buffer: flexible array acting as the channel for data transfer between two processes
 
-##Multhreading design
+##Multithreading design
 In webproxy, two steque objects are created: qnames for storing the shared memory’s name ID, qsegment_pointer for storing the pointer to the blob_t structure. When shared memory objects are created, both name ID and blob_t pointer will be added to these queues. Everytime webproxy receives a request from the client, name ID from the qname, and pop blob_t pointer from the qsegment_pointer are poped for use, and then work is done, both name ID and blob_t pointer wil be returned for recycling.
 
 In cache, one steque object is created: queue. Every time the boss thread in cache receive one request from webproxy, it will add the created socket for handling header information to the queue. Then worker thread's work starts with popping out one socket from the queue
